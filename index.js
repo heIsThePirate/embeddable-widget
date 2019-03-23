@@ -28,5 +28,14 @@ const getIpAddress = () => {
 const serverHost = '//' + getIpAddress() + ':' + serverPort;
 const platformScript = '/3rd/platform.js';
 
+clientApp.set('view engine', 'html');
+clientApp.engine('html', ejs.renderFile);
+clientApp.get('/', (req, res) => {
+	res.render('client/index', {
+		serverHost: serverHost,
+		platformScript: platformScript,
+	});
+});
+
 http.createServer(serverApp).listen(serverPort);
 http.createServer(clientApp).listen(clientPort);
